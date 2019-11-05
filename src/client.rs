@@ -24,4 +24,14 @@ impl Client {
             }
         )
     }
+
+    pub fn balance(&self, userpass: &str, coin: &str) -> response::Balance {
+        self.rpc_client.send(
+            request::Balance {
+                userpass: userpass.to_string(),
+                method: "my_balance".to_string(),
+                coin: coin.to_string()
+            }
+        )
+    }
 }

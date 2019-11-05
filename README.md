@@ -2,7 +2,7 @@
 
 A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatform/atomicDEX-API).
 
-### Supported calls
+#### Supported calls
 - [ ]   buy
 - [ ]   cancel_all_orders
 - [ ]   cancel_order
@@ -13,7 +13,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [ ]   get_enabled_coins
 - [ ]   get_trade_fee
 - [ ]   help
-- [ ]   my_balance
+- [x]   my_balance
 - [ ]   my_orders
 - [ ]   my_recent_swaps
 - [ ]   my_swap_status
@@ -29,5 +29,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [ ]   version
 - [ ]   withdraw
 
-### to do
+#### to do
 - [ ]   ability to provide own electrum server (url:port)
+- [ ]   error handling
+- [ ]   expose a cleaner response output

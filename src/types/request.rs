@@ -52,3 +52,10 @@ impl ElectrumServer {
         servers
     }
 }
+
+#[derive(Debug, Serialize)]
+pub struct Balance {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String
+}
