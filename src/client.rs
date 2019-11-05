@@ -1,6 +1,7 @@
 use super::network::client::Client as RpcClient;
 use crate::types::request;
 use crate::types::response;
+use crate::error::ApiError;
 
 pub struct Client {
     rpc_client: RpcClient
@@ -13,7 +14,7 @@ impl Client {
         }
     }
 
-    pub fn electrum(&self, userpass: &str, coin: &str) -> response::Electrum {
+    pub fn electrum(&self, userpass: &str, coin: &str) -> Result<response::Electrum, ApiError> {
         self.rpc_client.send(
             request::Electrum {
                 userpass: userpass.to_string(),
@@ -25,7 +26,7 @@ impl Client {
         )
     }
 
-    pub fn balance(&self, userpass: &str, coin: &str) -> response::Balance {
+    pub fn balance(&self, userpass: &str, coin: &str) -> Result<response::Balance, ApiError> {
         self.rpc_client.send(
             request::Balance {
                 userpass: userpass.to_string(),

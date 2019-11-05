@@ -32,4 +32,5 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 #### to do
 - [ ]   ability to provide own electrum server (url:port)
 - [ ]   error handling
+    - ability to catch an error as returned by atomicdex-api
 - [ ]   expose a cleaner response output
