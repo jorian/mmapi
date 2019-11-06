@@ -1,4 +1,4 @@
-use crate::network::client::{RpcError, RpcClientError};
+use crate::network::client::{RpcClientError, AtomicDexError};
 use core::fmt;
 use serde::export::Formatter;
 use serde::export::fmt::Error;
@@ -6,19 +6,21 @@ use serde::export::fmt::Error;
 // all the errors that this api can throw
 #[derive(Debug)]
 pub enum ApiError {
-    RPC(RpcError),
-    Client(RpcClientError)
+    RPC(AtomicDexError),
+    Client(RpcClientError),
+    Other(String)
 }
 
 impl fmt::Display for ApiError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        match *self {
+        match self {
             ApiError::Client(ref cause) =>
             match cause {
                 RpcClientError::Json(e) => fmt::Display::fmt(e, f),
                 RpcClientError::Transport(transport_error) => fmt::Display::fmt(transport_error, f),
             },
-            ApiError::RPC(ref cause) => write!(f, "RPC error: {}", cause.message),
+            ApiError::RPC(ref cause) => write!(f, "RPC error: {}", cause.error),
+            ApiError::Other(msg) => write!(f, "Other error: {}", msg)
         }
     }
 }

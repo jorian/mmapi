@@ -52,22 +52,30 @@ impl Client {
             .and_then(|mut res| {
                 let mut buf = String::new();
                 let _ = res.read_to_string(&mut buf);
-                dbg!(&buf);
 
-                // error is thrown when converting from string to json goes wrong.
-                serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
+                // this can still be an error. an error response is in the style:
+                // {
+                //      error: String
+                // }
+                // while a success response is:
+                // {
+                //      result: "success"
+                //      ..
+                // }
+                // where in some cases the result key is optional.
+                //
+                // So, we must determine if the response from atomicdex is erroneous. to do this, we need to look inside
+                // the json first. if there is an error key, we need to throw the error,
+                // else the json object is the object we need to return.
+                let data: Value = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
+
+                if data.pointer("/error").is_some() {
+                    let error: AtomicDexError = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
+                    Err(ApiError::RPC(error))
+                } else {
+                    serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
+                }
             });
-
-        // this can still be an error. an error response is in the style:
-        // {
-        //      error: String
-        // }
-        // while a success response is:
-        // {
-        //      result: "success"
-        //      ..
-        // }
-        // where in some cases the result key is optional.
 
         res
     }
@@ -94,14 +102,14 @@ impl Client {
             .and_then(|mut res| {
                 let mut buf = String::new();
                 let _ = res.read_to_string(&mut buf);
-                dbg!(&buf);
+//                dbg!(&buf);
 
                 // error is thrown when converting from string to json goes wrong.
                 serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
             });
 
         // if the result key contains an object or array, unwrap and return that.
-        let res = res.map(RpcResponse::into_result);
+        let res = res.map(AtomicDexResponse::into_result);
 
         match res {
             Ok(result) => {
@@ -121,30 +129,30 @@ impl Client {
 // is the case, the object that result is part of, is the object to use.
 // also, if both result and error are not in the keyset, the object to return is also the object itself
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct RpcResponse<R> {
+pub struct AtomicDexResponse<R> {
     pub result: Option<R>,
-    pub error: Option<RpcError>,
+    pub error: Option<AtomicDexError>,
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct RpcError {
-    pub message: String
+pub struct AtomicDexError {
+    pub error: String
 }
 
-impl<R> RpcResponse<R> {
-    pub fn into_result(self) -> Result<R, RpcError> {
+impl<R> AtomicDexResponse<R> {
+    pub fn into_result(self) -> Result<R, AtomicDexError> {
         match self {
-            RpcResponse {
+            AtomicDexResponse {
                 error: Some(rpc_error),
                 result: None,
                 ..
             } => Err(rpc_error),
-            RpcResponse {
+            AtomicDexResponse {
                 error: None,
                 result: Some(result),
                 ..
             } => Ok(result),
-            RpcResponse {
+            AtomicDexResponse {
                 error: None,
                 result: None,
                 ..

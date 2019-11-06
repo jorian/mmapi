@@ -22,3 +22,16 @@ pub struct EnabledCoin {
     pub address: String,
     pub ticker: String
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Buy {
+    pub uuid: String,
+    pub action: String,
+    pub base: String,
+    pub base_amount: String,
+    pub rel: String,
+    pub rel_amount: String,
+    pub method: String,
+    pub dest_pub_key: String,
+    pub sender_pubkey: String
+}
