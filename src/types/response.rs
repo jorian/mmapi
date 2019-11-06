@@ -70,7 +70,6 @@ pub struct EnabledCoin {
     pub ticker: String
 }
 
-
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct DisabledCoinResult {
     pub result: Option<DisabledCoin>,

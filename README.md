@@ -4,10 +4,10 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 
 ### Supported calls
 - [x]   buy
-- [ ]   cancel_all_orders
+- [x]   cancel_all_orders
 - [x]   cancel_order
-- [ ]   coins_needed_for_kickstart
-- [ ]   disable_coin
+- [x]   coins_needed_for_kickstart
+- [x]   disable_coin
 - [x]   electrum
 - [ ]   enable
 - [x]   get_enabled_coins

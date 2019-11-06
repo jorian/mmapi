@@ -6,7 +6,8 @@ pub struct Electrum {
     pub method: String,
     pub coin: String,
     pub servers: Vec<ElectrumServer>,
-    pub mm2: u8
+    pub mm2: u8,
+    pub tx_history: bool
 }
 
 #[derive(Debug, Serialize)]

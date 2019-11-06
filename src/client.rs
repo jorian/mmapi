@@ -27,13 +27,14 @@ impl Client {
         })
     }
 
-    pub fn electrum(&self, coin: &str) -> Result<response::Electrum, ApiError> {
+    pub fn electrum(&self, coin: &str, tx_history: bool) -> Result<response::Electrum, ApiError> {
         self.rpc_client.send(request::Electrum {
             userpass: String::from(&self.userpass),
             method: "electrum".to_string(),
             coin: coin.to_string(),
             servers: request::ElectrumServer::get_all(coin),
-            mm2: 1
+            mm2: 1,
+            tx_history
         })
     }
 
