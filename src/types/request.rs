@@ -62,6 +62,8 @@ pub struct Balance {
 
 #[derive(Debug, Serialize)]
 pub struct Buy {
+    pub userpass: String,
+    pub method: String,
     pub base: String,
     pub rel: String,
     pub price: String,

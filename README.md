@@ -3,7 +3,7 @@
 A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatform/atomicDEX-API).
 
 #### Supported calls
-- [ ]   buy
+- [x]   buy
 - [ ]   cancel_all_orders
 - [ ]   cancel_order
 - [ ]   coins_needed_for_kickstart
