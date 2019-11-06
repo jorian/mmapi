@@ -89,6 +89,13 @@ pub struct CancelByData {
 }
 
 #[derive(Debug, Serialize)]
+pub struct CancelOrder {
+    pub userpass: String,
+    pub method: String,
+    pub uuid: String
+}
+
+#[derive(Debug, Serialize)]
 pub struct Balance {
     pub userpass: String,
     pub method: String,
@@ -99,13 +106,6 @@ pub struct Balance {
 pub struct Generic {
     pub userpass: String,
     pub method: String
-}
-
-#[derive(Debug, Serialize)]
-pub struct CancelOrder {
-    pub userpass: String,
-    pub method: String,
-    pub uuid: String
 }
 
 #[derive(Debug, Serialize)]

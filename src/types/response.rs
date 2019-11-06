@@ -29,6 +29,17 @@ pub struct CancelledOrders {
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
+pub struct CancelledOrder {
+    pub result: Option<String>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct KickstartCoins {
+    pub result: Vec<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
 pub struct Electrum {
     pub address: Option<String>,
     pub balance: Option<String>,
@@ -59,11 +70,6 @@ pub struct EnabledCoin {
     pub ticker: String
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
-pub struct CancelledOrder {
-    pub result: Option<String>,
-    pub error: Option<String>
-}
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct DisabledCoinResult {

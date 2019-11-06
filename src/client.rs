@@ -59,4 +59,11 @@ impl Client {
             uuid: uuid.to_string()
         })
     }
+
+    pub fn coins_needed_for_kick_start(&self) -> Result<response::KickstartCoins, ApiError> {
+        self.rpc_client.send(request::Generic {
+            userpass: String::from(&self.userpass),
+            method: String::from("coins_needed_for_kick_start")
+        })
+    }
 }
