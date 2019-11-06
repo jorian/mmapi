@@ -54,13 +54,6 @@ impl ElectrumServer {
 }
 
 #[derive(Debug, Serialize)]
-pub struct Balance {
-    pub userpass: String,
-    pub method: String,
-    pub coin: String
-}
-
-#[derive(Debug, Serialize)]
 pub struct Buy {
     pub userpass: String,
     pub method: String,
@@ -68,6 +61,38 @@ pub struct Buy {
     pub rel: String,
     pub price: String,
     pub volume: String
+}
+
+#[derive(Debug, Serialize)]
+pub struct CancelAllOrders {
+    pub userpass: String,
+    pub method: String,
+    pub cancel_by: CancelBy
+}
+
+#[derive(Debug, Serialize)]
+pub struct CancelBy {
+    #[serde(rename = "type")]
+    type_: String, // actually an enum (All, Pair, Coin)
+    data: CancelByData
+}
+
+// either base AND rel need to be used, or just ticker.
+#[derive(Debug, Serialize)]
+pub struct CancelByData {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    base: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    rel: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    ticker: Option<String>
+}
+
+#[derive(Debug, Serialize)]
+pub struct Balance {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String
 }
 
 #[derive(Debug, Serialize)]

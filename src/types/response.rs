@@ -18,6 +18,17 @@ pub struct Buy {
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
+pub struct CancelledOrdersResult {
+    pub result: CancelledOrders
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct CancelledOrders {
+    pub cancelled: Vec<String>,
+    pub currently_matching: Vec<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
 pub struct Electrum {
     pub address: Option<String>,
     pub balance: Option<String>,
