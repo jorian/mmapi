@@ -13,3 +13,12 @@ pub struct Balance {
     pub balance: String,
     pub locked_by_swaps: String,
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct EnabledCoins(pub Vec<Coin>);
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Coin {
+    pub address: String,
+    pub ticker: String
+}

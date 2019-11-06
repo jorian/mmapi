@@ -59,3 +59,9 @@ pub struct Balance {
     pub method: String,
     pub coin: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct Generic {
+    pub userpass: String,
+    pub method: String
+}

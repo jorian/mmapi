@@ -5,6 +5,7 @@ use std::io::Read;
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 use crate::error::ApiError;
+use serde_json::Value;
 
 pub struct Client {
     client: HttpClient,
@@ -27,6 +28,10 @@ impl Client {
         }
     }
 
+    // this send is used when the expected response contains:
+    // - no result and no error key
+    // - a result with just a "success" string.
+    // in this case we don't need to further sanitize the result and we can just return the deserialized JSON.
     pub(crate) fn send<R, T>(
         &self,
         request: T,
@@ -40,17 +45,49 @@ impl Client {
             .post(self.url.as_str())
             .json(&request)
             .send()
-            .map_err(|err| RpcClientError::Transport(err))
+            // if it already returns an error after sending, we know it happened in transport:
+            .map_err(|err| ApiError::Client(RpcClientError::Transport(err)))
+            // now we're going to work with JSON, so any error will be a JSON conversion error
+            // a successful result is a Value we can work with.
             .and_then(|mut res| {
                 let mut buf = String::new();
                 let _ = res.read_to_string(&mut buf);
                 dbg!(&buf);
 
-                serde_json::from_str(&buf).map_err(|err| RpcClientError::Json(err))
+                // error is thrown when converting from string to json goes wrong.
+                serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
             });
 
-        dbg!(&res);
+        res
+    }
 
+    pub(crate) fn send2<R, T>(
+        &self,
+        request: T,
+    ) -> Result<R, ApiError>
+        where
+            T: Serialize + Debug,
+            R: DeserializeOwned + Debug,
+    {
+        let res = self
+            .client
+            .post(self.url.as_str())
+            .json(&request)
+            .send()
+            // if it already returns an error after sending, we know it happened in transport:
+            .map_err(|err| ApiError::Client(RpcClientError::Transport(err)))
+            // now we're going to work with JSON, so any error will be a JSON conversion error
+            // a successful result is a Value we can work with.
+            .and_then(|mut res| {
+                let mut buf = String::new();
+                let _ = res.read_to_string(&mut buf);
+                dbg!(&buf);
+
+                // error is thrown when converting from string to json goes wrong.
+                serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
+            });
+
+        // if the result key contains an object or array, unwrap and return that.
         let res = res.map(RpcResponse::into_result);
 
         match res {
@@ -60,11 +97,16 @@ impl Client {
                     Err(rpc_error) => Err(ApiError::RPC(rpc_error))
                 }
             },
-            Err(client_error) => Err(ApiError::Client(client_error))
+            Err(client_error) => Err(client_error)
         }
     }
 }
 
+
+// this part is just to differentiate the result into actual result and error.
+// but, this doesn't work for our case, since the value of the result key can be a string, and if that
+// is the case, the object that result is part of, is the object to use.
+// also, if both result and error are not in the keyset, the object to return is also the object itself
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct RpcResponse<R> {
     pub result: Option<R>,
@@ -84,16 +126,16 @@ impl<R> RpcResponse<R> {
                 result: None,
                 ..
             } => Err(rpc_error),
-//            RpcResponse {
-//                error: None,
-//                result: None,
-//                ..
-//            } => Ok(self),
             RpcResponse {
                 error: None,
                 result: Some(result),
                 ..
             } => Ok(result),
+            RpcResponse {
+                error: None,
+                result: None,
+                ..
+            } => panic!("no error and no result!"),
             _ => unreachable!()
         }
     }

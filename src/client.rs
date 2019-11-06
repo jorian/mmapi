@@ -35,4 +35,13 @@ impl Client {
             }
         )
     }
+
+    pub fn enabled_coins(&self, userpass: &str) -> Result<response::EnabledCoins, ApiError> {
+        self.rpc_client.send2(
+            request::Generic {
+                userpass: String::from(userpass),
+                method: String::from("get_enabled_coins")
+            }
+        )
+    }
 }
