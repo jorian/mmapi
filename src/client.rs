@@ -67,4 +67,12 @@ impl Client {
             method: String::from("coins_needed_for_kick_start")
         })
     }
+
+    pub fn trade_fee(&self, coin: &str) -> Result<response::TradeFeeResult, ApiError> {
+        self.rpc_client.send(request::TradeFee {
+            userpass: String::from(&self.userpass),
+            method: String::from("get_trade_fee"),
+            coin: coin.to_string()
+        })
+    }
 }

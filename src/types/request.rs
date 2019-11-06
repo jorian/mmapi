@@ -115,3 +115,10 @@ pub struct Disable {
     pub method: String,
     pub coin: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct TradeFee {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String
+}

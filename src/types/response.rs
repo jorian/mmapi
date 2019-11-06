@@ -89,3 +89,15 @@ pub struct DisabledCoinOrders {
     pub matching: Vec<String>,
     pub cancelled: Vec<String>
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct TradeFeeResult {
+    pub result: Option<TradeFee>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct TradeFee {
+    pub amount: String,
+    pub coin: String
+}
