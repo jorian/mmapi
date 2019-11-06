@@ -5,7 +5,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 #### Supported calls
 - [x]   buy
 - [ ]   cancel_all_orders
-- [ ]   cancel_order
+- [x]   cancel_order
 - [ ]   coins_needed_for_kickstart
 - [ ]   disable_coin
 - [x]   electrum
@@ -35,3 +35,8 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
     - [x]   have custom error
     - [ ]   ability to catch an error as returned by atomicdex-api
 - [ ]   expose a cleaner response output
+- [ ]   give better names to Error types
+    - do not use Other for everything
+
+#### bugs
+- [ ]   send2 doesn't properly parse error

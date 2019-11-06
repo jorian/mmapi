@@ -71,7 +71,8 @@ impl Client {
 
                 if data.pointer("/error").is_some() {
                     let error: AtomicDexError = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
-                    Err(ApiError::RPC(error))
+                    dbg!(&error);
+                    Err(ApiError::Other(error.error))
                 } else {
                     serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
                 }

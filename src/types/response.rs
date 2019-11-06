@@ -35,3 +35,8 @@ pub struct Buy {
     pub sender_pubkey: String,
     pub uuid: String,
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct CancelledOrder {
+    pub result: String,
+}

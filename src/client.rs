@@ -51,4 +51,12 @@ impl Client {
             method: String::from("get_enabled_coins")
         })
     }
+
+    pub fn cancel_order(&self, uuid: &str) -> Result<response::CancelledOrder, ApiError> {
+        self.rpc_client.send(request::CancelOrder {
+            userpass: String::from(&self.userpass),
+            method: String::from("cancel_order"),
+            uuid: uuid.to_string()
+        })
+    }
 }
