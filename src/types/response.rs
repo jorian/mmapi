@@ -15,10 +15,10 @@ pub struct Balance {
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct EnabledCoins(pub Vec<Coin>);
+pub struct EnabledCoins(pub Vec<EnabledCoin>);
 
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct Coin {
+pub struct EnabledCoin {
     pub address: String,
     pub ticker: String
 }

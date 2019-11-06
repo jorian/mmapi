@@ -58,9 +58,22 @@ impl Client {
                 serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
             });
 
+        // this can still be an error. an error response is in the style:
+        // {
+        //      error: String
+        // }
+        // while a success response is:
+        // {
+        //      result: "success"
+        //      ..
+        // }
+        // where in some cases the result key is optional.
+
         res
     }
 
+    // this send is used when the actual result is nested in its own result field,
+    // or when the atomicdex API returns an error.
     pub(crate) fn send2<R, T>(
         &self,
         request: T,
