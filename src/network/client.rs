@@ -67,15 +67,15 @@ impl Client {
                 // So, we must determine if the response from atomicdex is erroneous. to do this, we need to look inside
                 // the json first. if there is an error key, we need to throw the error,
                 // else the json object is the object we need to return.
-                let data: Value = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
-
-                if data.pointer("/error").is_some() {
-                    let error: AtomicDexError = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
-                    dbg!(&error);
-                    Err(ApiError::Other(error.error))
-                } else {
+//                let data: Value = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
+//
+//                if data.pointer("/error").is_some() {
+//                    let error: AtomicDexError = serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err))).unwrap();
+//                    dbg!(&error);
+//                    Err(ApiError::Other(error.error))
+//                } else {
                     serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
-                }
+//                }
             });
 
         res
@@ -83,45 +83,45 @@ impl Client {
 
     // this send is used when the actual result is nested in its own result field,
     // or when the atomicdex API returns an error.
-    pub(crate) fn send2<R, T>(
-        &self,
-        request: T,
-    ) -> Result<R, ApiError>
-        where
-            T: Serialize + Debug,
-            R: DeserializeOwned + Debug,
-    {
-        let res = self
-            .client
-            .post(self.url.as_str())
-            .json(&request)
-            .send()
-            // if it already returns an error after sending, we know it happened in transport:
-            .map_err(|err| ApiError::Client(RpcClientError::Transport(err)))
-            // now we're going to work with JSON, so any error will be a JSON conversion error
-            // a successful result is a Value we can work with.
-            .and_then(|mut res| {
-                let mut buf = String::new();
-                let _ = res.read_to_string(&mut buf);
-                dbg!(&buf);
-
-                // error is thrown when converting from string to json goes wrong.
-                serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
-            });
-
-        // if the result key contains an object or array, unwrap and return that.
-        let res = res.map(AtomicDexResponse::into_result);
-
-        match res {
-            Ok(result) => {
-                match result {
-                    Ok(result) => Ok(result),
-                    Err(rpc_error) => Err(ApiError::RPC(rpc_error))
-                }
-            },
-            Err(client_error) => Err(client_error)
-        }
-    }
+//    pub(crate) fn send2<R, T>(
+//        &self,
+//        request: T,
+//    ) -> Result<R, ApiError>
+//        where
+//            T: Serialize + Debug,
+//            R: DeserializeOwned + Debug,
+//    {
+//        let res = self
+//            .client
+//            .post(self.url.as_str())
+//            .json(&request)
+//            .send()
+//            // if it already returns an error after sending, we know it happened in transport:
+//            .map_err(|err| ApiError::Client(RpcClientError::Transport(err)))
+//            // now we're going to work with JSON, so any error will be a JSON conversion error
+//            // a successful result is a Value we can work with.
+//            .and_then(|mut res| {
+//                let mut buf = String::new();
+//                let _ = res.read_to_string(&mut buf);
+//                dbg!(&buf);
+//
+//                // error is thrown when converting from string to json goes wrong.
+//                serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
+//            });
+//
+//        // if the result key contains an object or array, unwrap and return that.
+//        let res = res.map(AtomicDexResponse::into_result);
+//
+//        match res {
+//            Ok(result) => {
+//                match result {
+//                    Ok(result) => Ok(result),
+//                    Err(rpc_error) => Err(ApiError::RPC(rpc_error))
+//                }
+//            },
+//            Err(client_error) => Err(client_error)
+//        }
+//    }
 }
 
 
@@ -129,36 +129,36 @@ impl Client {
 // but, this doesn't work for our case, since the value of the result key can be a string, and if that
 // is the case, the object that result is part of, is the object to use.
 // also, if both result and error are not in the keyset, the object to return is also the object itself
-#[derive(Debug, Deserialize, PartialEq)]
-pub struct AtomicDexResponse<R> {
-    pub result: Option<R>,
-    pub error: Option<AtomicDexError>,
-}
-
-#[derive(Debug, Deserialize, PartialEq)]
-pub struct AtomicDexError {
-    pub error: String
-}
-
-impl<R> AtomicDexResponse<R> {
-    pub fn into_result(self) -> Result<R, AtomicDexError> {
-        match self {
-            AtomicDexResponse {
-                error: Some(rpc_error),
-                result: None,
-                ..
-            } => Err(rpc_error),
-            AtomicDexResponse {
-                error: None,
-                result: Some(result),
-                ..
-            } => Ok(result),
-            AtomicDexResponse {
-                error: None,
-                result: None,
-                ..
-            } => panic!("no error and no result!"),
-            _ => unreachable!()
-        }
-    }
-}
+//#[derive(Debug, Deserialize, PartialEq)]
+//pub struct AtomicDexResponse<R> {
+//    pub result: Option<R>,
+//    pub error: Option<AtomicDexError>,
+//}
+//
+//#[derive(Debug, Deserialize, PartialEq)]
+//pub struct AtomicDexError {
+//    pub error: String
+//}
+//
+//impl<R> AtomicDexResponse<R> {
+//    pub fn into_result(self) -> Result<R, AtomicDexError> {
+//        match self {
+//            AtomicDexResponse {
+//                error: Some(rpc_error),
+//                result: None,
+//                ..
+//            } => Err(rpc_error),
+//            AtomicDexResponse {
+//                error: None,
+//                result: Some(result),
+//                ..
+//            } => Ok(result),
+//            AtomicDexResponse {
+//                error: None,
+//                result: None,
+//                ..
+//            } => panic!("no error and no result!"),
+//            _ => unreachable!()
+//        }
+//    }
+//}

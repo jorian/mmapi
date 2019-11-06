@@ -82,3 +82,10 @@ pub struct CancelOrder {
     pub method: String,
     pub uuid: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct Disable {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String
+}

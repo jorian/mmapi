@@ -16,8 +16,8 @@ impl Client {
         }
     }
 
-    pub fn buy(&self, base: &str, rel: &str, price: f64, volume: f64) -> Result<response::Buy, ApiError> {
-        self.rpc_client.send2(request::Buy {
+    pub fn buy(&self, base: &str, rel: &str, price: f64, volume: f64) -> Result<response::BuyResult, ApiError> {
+        self.rpc_client.send(request::Buy {
             userpass: String::from(&self.userpass),
             method: "buy".to_string(),
             base: base.to_string(),
@@ -46,7 +46,7 @@ impl Client {
     }
 
     pub fn enabled_coins(&self) -> Result<response::EnabledCoins, ApiError> {
-        self.rpc_client.send2(request::Generic {
+        self.rpc_client.send(request::Generic {
             userpass: String::from(&self.userpass),
             method: String::from("get_enabled_coins")
         })
