@@ -95,4 +95,16 @@ impl Client {
             }
         })
     }
+
+    // todo: price and volume as rational / f64
+    pub fn sell(&self, base: &str, rel: &str, price: f64, volume: f64) -> Result<response::SellResult, ApiError> {
+        self.rpc_client.send(request::Sell {
+            userpass: String::from(&self.userpass),
+            method: "buy".to_string(),
+            base: base.to_string(),
+            rel: rel.to_string(),
+            price: price.to_string(),
+            volume: volume.to_string()
+        })
+    }
 }

@@ -142,3 +142,13 @@ pub struct RecoverFunds {
 pub struct RecoveryUuid {
     pub uuid: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct Sell {
+    pub userpass: String,
+    pub method: String,
+    pub base: String,
+    pub rel: String,
+    pub price: String,
+    pub volume: String
+}

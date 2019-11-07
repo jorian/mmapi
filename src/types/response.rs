@@ -152,3 +152,22 @@ pub struct RecoveredFunds {
     pub tx_hash: String,
     pub tx_hex: String
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SellResult {
+    pub result: Option<Sell>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Sell {
+    pub action: String,
+    pub base: String,
+    pub base_amount: String,
+    pub rel: String,
+    pub rel_amount: String,
+    pub method: String,
+    pub dest_pub_key: String,
+    pub sender_pubkey: String,
+    pub uuid: String,
+}
