@@ -19,15 +19,15 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [ ]   my_swap_status
 - [ ]   my_tx_history
 - [ ]   order_status
-- [ ]   orderbook
-- [ ]   recover_funds_of_swap
-- [ ]   sell
-- [ ]   send_raw_transaction
-- [ ]   setprice
-- [ ]   set_required_confirmations
+- [x]   orderbook
+- [x]   recover_funds_of_swap
+- [x]   sell
+- [x]   send_raw_transaction
+- [x]   setprice
+- [x]   set_required_confirmations
 - [ ]   stop
 - [ ]   version
-- [ ]   withdraw
+- [x]   withdraw
 
 ### to do
 - [ ]   ability to provide own electrum server (url:port)
