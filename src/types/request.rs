@@ -180,3 +180,15 @@ pub struct RawTransaction {
     pub coin: String,
     pub tx_hex: String,
 }
+
+#[derive(Debug, Serialize)]
+pub struct SetPrice {
+    pub userpass: String,
+    pub method: String,
+    pub base: String,
+    pub rel: String,
+    pub price: String,
+    pub volume: String,
+    pub max: bool,
+    pub cancel_previous: bool
+}

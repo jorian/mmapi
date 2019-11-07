@@ -173,24 +173,29 @@ pub struct Sell {
 }
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct Withdraw {
-    pub tx_hex: String,
-    pub tx_hash: String,
-    pub from: Vec<String>,
-    pub to: Vec<String>,
-    pub total_amount: String,
-    pub spent_by_me: String,
-    pub received_by_me: String,
-    pub my_balance_change: String,
-    pub block_height: u32,
-    pub timestamp: u64,
-    pub fee_details: FeeDetails,
-    pub coin: String,
-    pub internal_id: String
+    pub tx_hex: Option<String>,
+    pub tx_hash: Option<String>,
+    pub from: Option<Vec<String>>,
+    pub to: Option<Vec<String>>,
+    pub total_amount: Option<String>,
+    pub spent_by_me: Option<String>,
+    pub received_by_me: Option<String>,
+    pub my_balance_change: Option<String>,
+    pub block_height: Option<u32>,
+    pub timestamp: Option<u64>,
+    pub fee_details: Option<FeeDetails>,
+    pub coin: Option<String>,
+    pub internal_id: Option<String>,
+    pub error: Option<String>
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct FeeDetails {
-
+    amount: Option<String>,
+    coin: Option<String>,
+    gas: Option<u64>,
+    gas_price: Option<String>,
+    total_fee: Option<String>
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
@@ -198,3 +203,28 @@ pub struct RawTxHash {
     pub tx_hash: Option<String>,
     pub error: Option<String>
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SetPriceResult {
+    result: Option<SetPrice>,
+    error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SetPrice {
+    base: String,
+    rel: String,
+    max_base_vol: String,
+    min_base_vol: String,
+    created_at: u64,
+    // todo: what does the response look like?
+//    matches: SetPriceMatches,
+    price: String,
+    started_swaps: Vec<String>,
+    uuid: String
+}
+
+//#[derive(Debug, Deserialize, PartialEq)]
+//pub struct SetPriceMatches {
+//
+//}

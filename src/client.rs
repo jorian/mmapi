@@ -128,4 +128,17 @@ impl Client {
             tx_hex: hex.to_string()
         })
     }
+
+    pub fn set_price(&self, base: &str, rel: &str, price: f64, volume: f64, max: bool, cancel_previous: bool) -> Result<response::SetPriceResult, ApiError> {
+        self.rpc_client.send(request::SetPrice {
+            userpass: String::from(&self.userpass),
+            method: "setprice".to_string(),
+            base: base.to_string(),
+            rel: rel.to_string(),
+            price: price.to_string(),
+            volume: volume.to_string(),
+            max,
+            cancel_previous,
+        })
+    }
 }
