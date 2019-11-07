@@ -200,3 +200,15 @@ pub struct Confirmations {
     pub coin: String,
     pub confirmations: u16
 }
+
+#[derive(Debug, Serialize)]
+pub struct Enable {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String,
+    pub urls: Option<Vec<String>>,
+    pub swap_contract_address: Option<String>,
+    pub gas_station_url: Option<String>,
+    pub mm2: u8,
+    pub tx_history: bool
+}

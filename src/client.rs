@@ -150,4 +150,20 @@ impl Client {
             confirmations
         })
     }
+
+    pub fn enable(&self, coin: &str, mm2: bool, tx_history: bool) -> Result<response::Enable, ApiError> {
+        self.rpc_client.send(request::Enable {
+            userpass: String::from(&self.userpass),
+            method: "enable".to_string(),
+            coin: coin.to_string(),
+            urls: None,
+            swap_contract_address: None,
+            gas_station_url: None,
+            mm2: match mm2 {
+                true => 1,
+                false => 0
+            },
+            tx_history
+        })
+    }
 }

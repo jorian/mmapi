@@ -236,6 +236,17 @@ pub struct Confirmations {
     pub confirmations: u16
 }
 
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Enable {
+    pub coin: Option<String>,
+    pub address: Option<String>,
+    pub balance: Option<String>,
+    pub locked_by_swaps: Option<String>,
+    pub required_confirmations: Option<u16>,
+    pub result: Option<String>,
+    pub error: Option<String>
+}
+
 //#[derive(Debug, Deserialize, PartialEq)]
 //pub struct SetPriceMatches {
 //
