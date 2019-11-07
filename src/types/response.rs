@@ -224,6 +224,18 @@ pub struct SetPrice {
     uuid: String
 }
 
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct ConfirmationsResult {
+    pub result: Option<Confirmations>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Confirmations {
+    pub coin: String,
+    pub confirmations: u16
+}
+
 //#[derive(Debug, Deserialize, PartialEq)]
 //pub struct SetPriceMatches {
 //

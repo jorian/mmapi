@@ -192,3 +192,11 @@ pub struct SetPrice {
     pub max: bool,
     pub cancel_previous: bool
 }
+
+#[derive(Debug, Serialize)]
+pub struct Confirmations {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String,
+    pub confirmations: u16
+}

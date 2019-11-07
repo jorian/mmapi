@@ -141,4 +141,13 @@ impl Client {
             cancel_previous,
         })
     }
+
+    pub fn set_required_confirmations(&self, coin: &str, confirmations: u16) -> Result<response::ConfirmationsResult, ApiError> {
+        self.rpc_client.send(request::Confirmations {
+            userpass: String::from(&self.userpass),
+            method: "set_required_confirmations".to_string(),
+            coin: coin.to_string(),
+            confirmations
+        })
+    }
 }
