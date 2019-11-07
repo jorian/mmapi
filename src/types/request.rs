@@ -152,3 +152,31 @@ pub struct Sell {
     pub price: String,
     pub volume: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct Withdraw {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String,
+    pub to: String,
+    pub amount: String,
+    pub max: bool,
+    pub fee: Option<WithdrawFee>
+}
+
+#[derive(Debug, Serialize)]
+pub struct WithdrawFee {
+    #[serde(rename = "type")]
+    pub type_: String,
+    pub amount: String,
+    pub gas_price: String,
+    pub gas: u32
+}
+
+#[derive(Debug, Serialize)]
+pub struct RawTransaction {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String,
+    pub tx_hex: String,
+}

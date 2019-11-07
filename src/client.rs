@@ -2,7 +2,7 @@ use super::network::client::Client as RpcClient;
 use crate::types::request;
 use crate::types::response;
 use crate::error::ApiError;
-use crate::types::request::RecoveryUuid;
+use crate::types::request::{RecoveryUuid, WithdrawFee};
 
 pub struct Client {
     rpc_client: RpcClient,
@@ -105,6 +105,27 @@ impl Client {
             rel: rel.to_string(),
             price: price.to_string(),
             volume: volume.to_string()
+        })
+    }
+
+    pub fn withdraw(&self, coin: &str, to: &str, amount: f64, max: bool, fee: Option<WithdrawFee>) -> Result<response::Withdraw, ApiError> {
+        self.rpc_client.send(request::Withdraw {
+            userpass: String::from(&self.userpass),
+            method: "withdraw".to_string(),
+            coin: coin.to_string(),
+            to: to.to_string(),
+            amount: amount.to_string(),
+            max,
+            fee
+        })
+    }
+
+    pub fn send_raw_transaction(&self, coin: &str, hex: &str) -> Result<response::RawTxHash, ApiError> {
+        self.rpc_client.send(request::RawTransaction {
+            userpass: String::from(&self.userpass),
+            method: "send_raw_transaction".to_string(),
+            coin: coin.to_string(),
+            tx_hex: hex.to_string()
         })
     }
 }

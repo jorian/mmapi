@@ -171,3 +171,30 @@ pub struct Sell {
     pub sender_pubkey: String,
     pub uuid: String,
 }
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Withdraw {
+    pub tx_hex: String,
+    pub tx_hash: String,
+    pub from: Vec<String>,
+    pub to: Vec<String>,
+    pub total_amount: String,
+    pub spent_by_me: String,
+    pub received_by_me: String,
+    pub my_balance_change: String,
+    pub block_height: u32,
+    pub timestamp: u64,
+    pub fee_details: FeeDetails,
+    pub coin: String,
+    pub internal_id: String
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct FeeDetails {
+
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct RawTxHash {
+    pub tx_hash: Option<String>,
+    pub error: Option<String>
+}
