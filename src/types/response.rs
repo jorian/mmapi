@@ -138,3 +138,17 @@ pub struct Bid {
     age: u16,
     zcredits: u16
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct RecoveredFundsResult {
+    pub result: Option<RecoveredFunds>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct RecoveredFunds {
+    pub action: String,
+    pub coin: String,
+    pub tx_hash: String,
+    pub tx_hex: String
+}

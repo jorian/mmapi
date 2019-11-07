@@ -130,3 +130,15 @@ pub struct Orderbook {
     pub base: String,
     pub rel: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct RecoverFunds {
+    pub userpass: String,
+    pub method: String,
+    pub params: RecoveryUuid
+}
+
+#[derive(Debug, Serialize)]
+pub struct RecoveryUuid {
+    pub uuid: String
+}

@@ -2,6 +2,7 @@ use super::network::client::Client as RpcClient;
 use crate::types::request;
 use crate::types::response;
 use crate::error::ApiError;
+use crate::types::request::RecoveryUuid;
 
 pub struct Client {
     rpc_client: RpcClient,
@@ -82,6 +83,16 @@ impl Client {
             method: "orderbook".to_string(),
             base: base.to_string(),
             rel: rel.to_string()
+        })
+    }
+
+    pub fn recover_funds(&self, uuid: &str) -> Result<response::RecoveredFundsResult, ApiError> {
+        self.rpc_client.send(request::RecoverFunds {
+            userpass: String::from(&self.userpass),
+            method: "recover_funds_of_swap".to_string(),
+            params: RecoveryUuid {
+                uuid: String::from(uuid)
+            }
         })
     }
 }
