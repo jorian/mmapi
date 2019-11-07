@@ -11,7 +11,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [x]   electrum
 - [ ]   enable
 - [x]   get_enabled_coins
-- [ ]   get_trade_fee
+- [x]   get_trade_fee
 - [ ]   help
 - [x]   my_balance
 - [ ]   my_orders

@@ -101,3 +101,40 @@ pub struct TradeFee {
     pub amount: String,
     pub coin: String
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Orderbook {
+    pub asks: Option<Vec<Ask>>,
+    pub bids: Option<Vec<Bid>>,
+    pub numasks: Option<u16>,
+    pub numbids: Option<u16>,
+    pub biddepth: Option<u16>,
+    pub askdepth: Option<u16>,
+    pub base: Option<String>,
+    pub rel: Option<String>,
+    pub timestamp: Option<u64>,
+    pub netid: Option<u16>,
+    pub error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Ask {
+    coin: String,
+    address: String,
+    price: String,
+    maxvolume: f32,
+    pubkey: String,
+    age: u16,
+    zcredits: u16
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Bid {
+    coin: String,
+    address: String,
+    price: String,
+    maxvolume: f32,
+    pubkey: String,
+    age: u16,
+    zcredits: u16
+}

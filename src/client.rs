@@ -75,4 +75,13 @@ impl Client {
             coin: coin.to_string()
         })
     }
+
+    pub fn orderbook(&self, base: &str, rel: &str) -> Result<response::Orderbook, ApiError> {
+        self.rpc_client.send(request::Orderbook {
+            userpass: String::from(&self.userpass),
+            method: "orderbook".to_string(),
+            base: base.to_string(),
+            rel: rel.to_string()
+        })
+    }
 }

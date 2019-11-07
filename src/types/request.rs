@@ -122,3 +122,11 @@ pub struct TradeFee {
     pub method: String,
     pub coin: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct Orderbook {
+    pub userpass: String,
+    pub method: String,
+    pub base: String,
+    pub rel: String
+}
