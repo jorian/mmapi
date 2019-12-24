@@ -45,7 +45,7 @@ impl Client {
             .and_then(|mut res| {
                 let mut buf = String::new();
                 let _ = res.read_to_string(&mut buf);
-                dbg!(&buf);
+                // dbg!(&buf);
 
                 serde_json::from_str(&buf).map_err(|err| ApiError::Client(RpcClientError::Json(err)))
             });

@@ -1,3 +1,7 @@
+use std::collections::HashMap;
+
+type UUID = String;
+
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct BuyResult {
     pub result: Option<Buy>,
@@ -247,6 +251,85 @@ pub struct Enable {
     pub error: Option<String>
 }
 
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct OrdersResult {
+    result: Option<Orders>,
+    error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Orders {
+    maker_orders: HashMap<UUID, MakerOrders>,
+    taker_orders: HashMap<UUID, TakerOrders>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct MakerOrders {
+    available_amount: String,
+    base: String,
+    cancellable: bool,
+    created_at: u64,
+    matches: HashMap<UUID, Matches>,
+    max_base_vol: String,
+    min_base_vol: String,
+    price: String,
+    rel: String,
+    // started_swaps: Vec<Swap>
+    uuid: String
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct TakerOrders {
+    cancellable: bool,
+    created_at: u64,
+    matches: HashMap<UUID, Matches>,
+    request: MatchRequest,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Matches {
+    connect: MatchDetails,
+    connected: MatchDetails,
+    // request is only used in MakerOrders
+    request: Option<MatchRequest>,
+    last_updated: u64,
+    reserved: MatchReserved
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct MatchDetails {
+    dest_pub_key: String,
+    maker_order_uuid: String,
+    method: String,
+    sender_pubkey: String,
+    taker_order_uuid: String,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct MatchRequest {
+    action: String,
+    base: String,
+    base_amount: String,
+    dest_pub_key: String,
+    method: String,
+    rel: String,
+    rel_amount: String,
+    sender_pubkey: String,
+    uuid: UUID,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct MatchReserved {
+    base: String,
+    base_amount: String,
+    dest_pub_key: String,
+    maker_order_uuid: UUID,
+    method: String,
+    rel: String,
+    rel_amount: String,
+    sender_pubkey: String,
+    taker_order_uuid: UUID
+}
 //#[derive(Debug, Deserialize, PartialEq)]
 //pub struct SetPriceMatches {
 //

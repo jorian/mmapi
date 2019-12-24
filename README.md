@@ -12,12 +12,12 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [x]   coins_needed_for_kickstart
 - [x]   disable_coin
 - [x]   electrum
-- [ ]   enable
+- [x]   enable
 - [x]   get_enabled_coins
 - [x]   get_trade_fee
 - [ ]   help
 - [x]   my_balance
-- [ ]   my_orders
+- [x]   my_orders
 - [ ]   my_recent_swaps
 - [ ]   my_swap_status
 - [ ]   my_tx_history
@@ -41,6 +41,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [ ]   give better names to Error types
     - [ ]   do not use Other for everything
 - [ ]   test ETH + ERC20 withdraw
+- [ ]   rational number support
 
 ### bugs
 - [ ]   send2 doesn't properly parse error

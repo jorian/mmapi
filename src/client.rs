@@ -186,4 +186,12 @@ impl Client {
             tx_history
         })
     }
+
+    // the result are orders that are stored locally.
+    pub fn orders(&self) -> Result<response::OrdersResult, ApiError> {
+        self.rpc_client.send(request::Generic {
+            userpass: String::from(&self.userpass),
+            method: "my_orders".to_string()
+        })
+    }
 }
