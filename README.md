@@ -2,6 +2,9 @@
 
 A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatform/atomicDEX-API).
 
+## Goals:
+- Expose a cleaner API (see below for plethora of response variations that this crate tries to solve)
+
 ### Supported calls
 - [x]   buy
 - [x]   cancel_all_orders
@@ -36,7 +39,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
     - [ ]   ability to catch an error as returned by atomicdex-api
 - [ ]   expose a cleaner response output
 - [ ]   give better names to Error types
-    - do not use Other for everything
+    - [ ]   do not use Other for everything
 - [ ]   test ETH + ERC20 withdraw
 
 ### bugs

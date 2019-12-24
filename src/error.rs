@@ -1,7 +1,6 @@
 use crate::network::client::{RpcClientError};
 use core::fmt;
 use serde::export::Formatter;
-use serde::export::fmt::Error;
 
 // all the errors that this api can throw
 #[derive(Debug)]

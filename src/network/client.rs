@@ -5,7 +5,6 @@ use std::io::Read;
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 use crate::error::ApiError;
-use serde_json::Value;
 
 pub struct Client {
     client: HttpClient,

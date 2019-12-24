@@ -17,6 +17,10 @@ impl Client {
         }
     }
 
+    pub fn get_userpass(&self) -> String {
+        self.userpass.clone()
+    }
+
     pub fn buy(&self, base: &str, rel: &str, price: f64, volume: f64) -> Result<response::BuyResult, ApiError> {
         self.rpc_client.send(request::Buy {
             userpass: String::from(&self.userpass),
@@ -151,14 +155,30 @@ impl Client {
         })
     }
 
-    pub fn enable(&self, coin: &str, mm2: bool, tx_history: bool) -> Result<response::Enable, ApiError> {
+    pub fn enable_standard<T: Into<String>>(&self, coin: T, mm2: bool, tx_history: bool) -> Result<response::Enable, ApiError> {
         self.rpc_client.send(request::Enable {
             userpass: String::from(&self.userpass),
             method: "enable".to_string(),
-            coin: coin.to_string(),
+            coin: coin.into(),
             urls: None,
             swap_contract_address: None,
             gas_station_url: None,
+            mm2: match mm2 {
+                true => 1,
+                false => 0
+            },
+            tx_history
+        })
+    }
+
+    pub fn enable_eth_and_erc20<T: Into<String>>(&self, coin: T, urls: Vec<String>, swap_contract_address: T, gas_station_url: Option<T>, mm2: bool, tx_history: bool) -> Result<response::Enable, ApiError> {
+        self.rpc_client.send(request::Enable {
+            userpass: String::from(&self.userpass),
+            method: "enable".to_string(),
+            coin: coin.into(),
+            urls: Some(urls),
+            swap_contract_address: Some(swap_contract_address.into()),
+            gas_station_url: gas_station_url.map(|url| url.into()),
             mm2: match mm2 {
                 true => 1,
                 false => 0

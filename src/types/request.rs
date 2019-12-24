@@ -27,8 +27,8 @@ impl ElectrumServer {
     /// Fetches all available electrums from coins repo.
     pub fn get_all(coin: &str) -> Vec<Self> {
         let response = reqwest::get(&format!("https://raw.githubusercontent.com/jorian/coins/master/electrums/{}", coin));
-        let mut data = response.expect("unable to fetch electrum servers"); // todo throw dialog when error
-        let data: Value = data.json().expect("error while converting coins/electrum response to json"); // todo throw error dialog when error
+        let mut data = response.expect("unable to fetch electrum servers"); 
+        let data: Value = data.json().expect("error while converting coins/electrum response to json"); 
         let array = data.as_array().expect("something went wrong while converting to array; are there any electrums at all?"); // todo error
 
         let mut servers = vec![];
@@ -201,6 +201,9 @@ pub struct Confirmations {
     pub confirmations: u16
 }
 
+/// Enables:
+/// - a natively installed full node
+/// - an ETH or ERC20 coin
 #[derive(Debug, Serialize)]
 pub struct Enable {
     pub userpass: String,
