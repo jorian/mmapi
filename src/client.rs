@@ -201,4 +201,12 @@ impl Client {
             method: "my_recent_swaps".to_string()
         })
     }
+
+    pub fn swap_status(&self, uuid: &str) -> Result<response::SwapStatusResult, ApiError>{
+        self.rpc_client.send(request::SwapStatus {
+            userpass: String::from(&self.userpass),
+            method: "my_swap_status".to_string(),
+            params: uuid.into()
+        })
+    }
 }

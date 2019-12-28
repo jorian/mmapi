@@ -215,3 +215,25 @@ pub struct Enable {
     pub mm2: u8,
     pub tx_history: bool
 }
+
+#[derive(Debug, Serialize)]
+pub struct SwapStatus {
+    pub userpass: String,
+    pub method: String,
+    pub params: UUID,
+}
+
+#[derive(Debug, Serialize)]
+pub struct UUID {
+    uuid: String
+}
+
+impl<T> From<T> for UUID
+    where T: Into<String>
+{
+    fn from(uuid: T) -> Self {
+        UUID {
+            uuid: uuid.into()
+        }
+    }
+}

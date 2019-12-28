@@ -18,8 +18,8 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [ ]   help
 - [x]   my_balance
 - [x]   my_orders
-- [ ]   my_recent_swaps
-- [ ]   my_swap_status
+- [x]   my_recent_swaps
+- [x]   my_swap_status
 - [ ]   my_tx_history
 - [ ]   order_status
 - [x]   orderbook

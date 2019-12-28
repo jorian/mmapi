@@ -447,3 +447,10 @@ enum SwapEventType {
     MakerPaymentRefunded,
     MakerPaymentRefundFailed,
 }
+
+//////
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SwapStatusResult {
+    result: Option<Swap>,
+    error: Option<String>,
+}
