@@ -330,7 +330,82 @@ pub struct MatchReserved {
     sender_pubkey: String,
     taker_order_uuid: UUID
 }
-//#[derive(Debug, Deserialize, PartialEq)]
-//pub struct SetPriceMatches {
-//
-//}
+
+/////////////////////////////////////////////////////////////////////////
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct RecentSwapsResult {
+    result: Option<RecentSwaps>,
+    error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct RecentSwaps {
+    from_uuid: Option<UUID>,
+    limit: u32,
+    skipped: u32,
+    swaps: Vec<Swap>,
+    total: u32,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Swap {
+    error_events: Option<Vec<String>>,
+    events: Vec<SwapEvent>,
+    gui: String,
+    maker_amount: String,
+    maker_coin: String,
+    mm_version: String,
+    my_info: SwapInfo,
+    recoverable: bool,
+    success_events: Vec<String>,
+    taker_amount: String,
+    taker_coin: String,
+    #[serde(rename = "type")]
+    swap_type: String,
+    uuid: UUID,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SuccessEvents(Vec<String>);
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SwapInfo {
+    my_amount: String,
+    my_coin: String,
+    other_amount: String,
+    other_coin: String,
+    started_at: u64,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SwapEvent {
+    event: SwapEventDetails,
+    timestamp: u64,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SwapEventDetails {
+    data: Option<SwapEventData>,
+    #[serde(rename = "type")]
+    event_type: String, // TODO make this an Enum
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SwapEventData {
+    lock_duration: Option<u64>,
+    maker_amount: Option<String>,
+    maker_coin: Option<String>,
+    maker_coin_start_block: Option<u32>,
+    maker_payment_confirmations: Option<u32>,
+    maker_payment_lock: Option<u64>,
+    my_persistent_pub: Option<String>,
+    secret: Option<String>,
+    secret_hash: Option<String>,
+    started_at: Option<u64>,
+    taker: Option<String>,
+    taker_amount: Option<String>,
+    taker_coin: Option<String>,
+    taker_coin_start_block: Option<u32>,
+    taker_payment_confirmations: Option<u16>,
+    uuid: Option<UUID>,
+}

@@ -194,4 +194,11 @@ impl Client {
             method: "my_orders".to_string()
         })
     }
+
+    pub fn recent_swaps(&self) -> Result<response::RecentSwapsResult, ApiError>{
+        self.rpc_client.send(request::Generic {
+            userpass: String::from(&self.userpass),
+            method: "my_recent_swaps".to_string()
+        })
+    }
 }
