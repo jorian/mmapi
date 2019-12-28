@@ -387,7 +387,7 @@ pub struct SwapEvent {
 pub struct SwapEventDetails {
     data: Option<SwapEventData>,
     #[serde(rename = "type")]
-    event_type: String, // TODO make this an Enum
+    event_type: SwapEventType, // TODO make this an Enum
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
@@ -424,4 +424,26 @@ pub struct SwapEventData {
     tx_hash: Option<String>,
     tx_hex: Option<String>,
     uuid: Option<UUID>,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+enum SwapEventType {
+    Started,
+    Negotiated,
+    TakerFeeValidated,
+    MakerPaymentSent,
+    TakerPaymentReceived,
+    TakerPaymentWaitConfirmStarted,
+    TakerPaymentValidatedAndConfirmed,
+    TakerPaymentSpent,
+    Finished,
+    StartFailed,
+    NegotiateFailed,
+    TakerFeeValidateFailed,
+    MakerPaymentTransactionFailed,
+    MakerPaymentDataSendFailed,
+    TakerPaymentValidateFailed,
+    TakerPaymentSpendFailed,
+    MakerPaymentRefunded,
+    MakerPaymentRefundFailed,
 }
