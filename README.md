@@ -21,7 +21,7 @@ A Rusty layer that talks to the [AtomicDEX API](https://github.com/KomodoPlatfor
 - [x]   my_recent_swaps
 - [x]   my_swap_status
 - [ ]   my_tx_history
-- [ ]   order_status
+- [x]   order_status
 - [x]   orderbook
 - [x]   recover_funds_of_swap
 - [x]   sell

@@ -209,4 +209,12 @@ impl Client {
             params: uuid.into()
         })
     }
+
+    pub fn order_status<T: Into<String>>(&self, uuid: T) -> Result<response::OrderStatus, ApiError> {
+        self.rpc_client.send(request::OrderStatus {
+            userpass: String::from(&self.userpass),
+            method: "order_status".to_string(),
+            uuid: uuid.into()
+        })
+    }
 }

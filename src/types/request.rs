@@ -237,3 +237,10 @@ impl<T> From<T> for UUID
         }
     }
 }
+
+#[derive(Debug, Serialize)]
+pub struct OrderStatus {
+    pub userpass: String,
+    pub method: String,
+    pub uuid: String
+}

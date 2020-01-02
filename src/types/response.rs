@@ -259,12 +259,27 @@ pub struct OrdersResult {
 
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct Orders {
-    maker_orders: HashMap<UUID, MakerOrders>,
-    taker_orders: HashMap<UUID, TakerOrders>
+    maker_orders: HashMap<UUID, MakerOrder>,
+    taker_orders: HashMap<UUID, TakerOrder>
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct MakerOrders {
+pub struct OrderStatus {
+    order: OrderType,
+    // the following field is somewhat redundant as the enum above defines the type or order
+    #[serde(rename = "type")]
+    order_type: String,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+#[serde(untagged)]
+pub enum OrderType {
+    MakerOrder(MakerOrder),
+    TakerOrder(TakerOrder)
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct MakerOrder {
     available_amount: String,
     base: String,
     cancellable: bool,
@@ -274,12 +289,12 @@ pub struct MakerOrders {
     min_base_vol: String,
     price: String,
     rel: String,
-    // started_swaps: Vec<Swap>
+    started_swaps: Vec<Swap>,
     uuid: String
 }
 
 #[derive(Debug, Deserialize, PartialEq)]
-pub struct TakerOrders {
+pub struct TakerOrder {
     cancellable: bool,
     created_at: u64,
     matches: HashMap<UUID, Matches>,
