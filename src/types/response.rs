@@ -463,9 +463,57 @@ enum SwapEventType {
     MakerPaymentRefundFailed,
 }
 
-//////
 #[derive(Debug, Deserialize, PartialEq)]
 pub struct SwapStatusResult {
     result: Option<Swap>,
     error: Option<String>,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct TxHistoryResult {
+    result: Option<TxHistory>,
+    error: Option<String>
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct TxHistory {
+    current_block: u32,
+    from_id: Option<String>,
+    limit: u32,
+    skipped: u32,
+    sync_status: SyncState,
+    total: u32,
+    transactions: Vec<Tx>,
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct SyncState {
+    state: SyncStateEnum
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub enum SyncStateEnum {
+    Finished,
+    InProgress,
+    NotStarted,
+    NotEnabled,
+    Error
+}
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Tx {
+    block_height: u32,
+    coin: String,
+    confirmations: u32,
+    fee_details: FeeDetails,
+    from: Vec<String>,
+    internal_id: String,
+    my_balance_change: String,
+    received_by_me: String,
+    spent_by_me: String,
+    timestamp: u64,
+    to: Vec<String>,
+    total_amount: String,
+    tx_hash: String,
+    tx_hex: String,
 }

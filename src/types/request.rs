@@ -244,3 +244,13 @@ pub struct OrderStatus {
     pub method: String,
     pub uuid: String
 }
+
+#[derive(Debug, Serialize)]
+pub struct TxHistory {
+    pub userpass: String,
+    pub method: String,
+    pub coin: String,
+    pub limit: u32,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub from_id: Option<String>,
+}

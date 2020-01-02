@@ -2,7 +2,7 @@ use super::network::client::Client as RpcClient;
 use crate::types::request;
 use crate::types::response;
 use crate::error::ApiError;
-use crate::types::request::{RecoveryUuid, WithdrawFee};
+use crate::types::request::{RecoveryUuid, WithdrawFee, UUID};
 
 pub struct Client {
     rpc_client: RpcClient,
@@ -215,6 +215,16 @@ impl Client {
             userpass: String::from(&self.userpass),
             method: "order_status".to_string(),
             uuid: uuid.into()
+        })
+    }
+
+    pub fn tx_history<T: Into<String>>(&self, coin: T, limit: u32, from_id: Option<T>) -> Result<response::TxHistoryResult, ApiError> {
+        self.rpc_client.send(request::TxHistory {
+            userpass: String::from(&self.userpass),
+            method: "my_tx_history".to_string(),
+            coin: coin.into(),
+            limit,
+            from_id: from_id.map(|id| id.into()),
         })
     }
 }
