@@ -35,18 +35,8 @@ impl ElectrumServer {
         for a in array {
             servers.push(ElectrumServer {
                 url: a["url"].as_str().unwrap().to_string(),
-                protocol: {
-                    match a["tcp"].as_str() {
-                        None => None,
-                        Some(tcp) => Some(tcp.to_string())
-                    }
-                },
-                disable_cert_verification: {
-                    match a["disable_cert_verification"].as_str() {
-                        None => None,
-                        Some(cert) => Some(cert.parse().unwrap())
-                    }
-                },
+                protocol: a["tcp"].as_str().map(|tcp| String::from(tcp)),
+                disable_cert_verification: a["disable_cert_verification"].as_str().map(|cert| cert.parse().unwrap()),
             });
         };
 
@@ -135,12 +125,7 @@ pub struct Orderbook {
 pub struct RecoverFunds {
     pub userpass: String,
     pub method: String,
-    pub params: RecoveryUuid
-}
-
-#[derive(Debug, Serialize)]
-pub struct RecoveryUuid {
-    pub uuid: String
+    pub params: UUID,
 }
 
 #[derive(Debug, Serialize)]
