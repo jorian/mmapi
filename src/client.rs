@@ -227,4 +227,11 @@ impl Client {
             from_id: from_id.map(|id| id.into()),
         })
     }
+
+    pub fn stop(&self) -> Result<response::Stop, ApiError> {
+        self.rpc_client.send(request::Generic {
+            userpass: String::from(&self.userpass),
+            method: "stop".to_string()
+        })
+    }
 }

@@ -517,3 +517,8 @@ pub struct Tx {
     tx_hash: String,
     tx_hex: String,
 }
+
+#[derive(Debug, Deserialize, PartialEq)]
+pub struct Stop {
+    result: String
+}
