@@ -121,26 +121,26 @@ pub struct Orderbook {
     pub error: Option<String>
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct Ask {
-    coin: String,
-    address: String,
-    price: String,
-    maxvolume: f32,
-    pubkey: String,
-    age: u16,
-    zcredits: u16
+    pub coin: String,
+    pub address: String,
+    pub price: String,
+    pub maxvolume: String,
+    pub pubkey: String,
+    pub age: i16,
+    pub zcredits: u16
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
+#[derive(Clone, Debug, Deserialize, PartialEq)]
 pub struct Bid {
-    coin: String,
-    address: String,
-    price: String,
-    maxvolume: f32,
-    pubkey: String,
-    age: u16,
-    zcredits: u16
+    pub coin: String,
+    pub address: String,
+    pub price: String,
+    pub maxvolume: String,
+    pub pubkey: String,
+    pub age: i16,
+    pub zcredits: u16
 }
 
 #[derive(Debug, Deserialize, PartialEq)]

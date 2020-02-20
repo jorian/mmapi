@@ -6,7 +6,8 @@ extern crate serde_derive;
 
 mod network;
 mod client;
-mod types;
+pub mod types;
 mod error;
 
 pub use client::Client;
+pub use types::response;
