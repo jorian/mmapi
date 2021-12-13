@@ -1,6 +1,6 @@
 use crate::network::client::{RpcClientError};
 use core::fmt;
-use serde::export::Formatter;
+// use serde_json::ser::Formatter;
 
 // all the errors that this api can throw
 #[derive(Debug)]
@@ -11,7 +11,7 @@ pub enum ApiError {
 }
 
 impl fmt::Display for ApiError {
-    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> fmt::Result {
         match self {
             ApiError::Client(ref cause) =>
             match cause {

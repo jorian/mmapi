@@ -10,7 +10,7 @@ pub struct Electrum {
     pub tx_history: bool
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone)]
 pub struct ElectrumServer {
     pub url: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -40,7 +40,7 @@ impl ElectrumServer {
             });
         };
 
-        servers
+        vec![servers.first().cloned().unwrap()]
     }
 }
 
